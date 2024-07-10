@@ -1,36 +1,22 @@
-version: '3.7'
-
-volumes:
-  dvwa:
-  esdata:
-  logs:
-
-networks:
-  dvwa:
-
 services:
   dvwa:
     build: .
     image: ghcr.io/digininja/dvwa:latest
+    container_name: dvwa-1
     pull_policy: always
     environment:
       - DB_SERVER=db
     depends_on:
       - db
-      - logstash
     networks:
       - dvwa
     ports:
-      - 127.0.0.1:4280:80
+      - 80:80
     restart: unless-stopped
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "200k"
-        max-file: "10"
 
   db:
     image: docker.io/library/mariadb:10
+    container_name: db-1
     environment:
       - MYSQL_ROOT_PASSWORD=dvwa
       - MYSQL_DATABASE=dvwa
@@ -43,10 +29,11 @@ services:
     restart: unless-stopped
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.22
+    container_name: elasticsearch-1
     environment:
-      - discovery.type=single-node
-      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - discovery.type=single-node          # Single-node mode
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m      # Inital heap size - Maximum heap size
     volumes:
       - esdata:/usr/share/elasticsearch/data
     networks:
@@ -56,7 +43,8 @@ services:
     restart: unless-stopped
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.17.0
+    image: docker.elastic.co/kibana/kibana:7.17.22
+    container_name: kibana-1
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
     depends_on:
@@ -64,19 +52,25 @@ services:
     networks:
       - dvwa
     ports:
-      - 5601:5601
+      - 8080:5601
     restart: unless-stopped
 
   logstash:
-    image: docker.elastic.co/logstash/logstash:7.17.0
+    image: docker.elastic.co/logstash/logstash:7.17.22
+    container_name: logstash-1
     user: root
     volumes:
       - ./logstash/pipeline:/usr/share/logstash/pipeline
-      - /var/lib/docker/containers/91fe12718b0b2c004766fd3e427c69056ba7964fef6801e1168dac6a1569c814:/var/lib/docker/containers/91fe12718b0b2c004766fd3e427c69056ba7964fef6801e1168dac6a1569c814:ro
-    environment:
-      - LOGS_PATH=/var/lib/docker/containers/91fe12718b0b2c004766fd3e427c69056ba7964fef6801e1168dac6a1569c814/91fe12718b0b2c004766fd3e427c69056ba7964fef6801e1168dac6a1569c814-json.log
+      - /var/lib/docker/containers/2e24b3fa01a5ee34d92c5ab69093d3517bfecf6f6c5f4441d40f8338c2cbc7de/2e24b3fa01a5ee34d92c5ab69093d3517bfecf6f6c5f4441d40f8338c2cbc7de-json.log:/var/lib/docker/containers/dvwa/access.log
     depends_on:
       - elasticsearch
     networks:
       - dvwa
     restart: unless-stopped
+
+volumes:
+  dvwa:
+  esdata:
+
+networks:
+  dvwa:
