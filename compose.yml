@@ -1,7 +1,7 @@
 services:
   dvwa:
     build: .
-    image: ghcr.io/digininja/dvwa:latest
+    image: ghcr.io/digininja/dvwa:2.3
     container_name: dvwa-1
     pull_policy: always
     environment:
@@ -61,7 +61,7 @@ services:
     user: root
     volumes:
       - ./logstash/pipeline:/usr/share/logstash/pipeline
-      - /var/lib/docker/containers/a5672aaa90c35a56a43ec22169cad5d900af91f70ddff444b900ea08b627d66c/a5672aaa90c35a56a43ec22169cad5d900af91f70ddff444b900ea08b627d66c-json.log:/var/lib/docker/containers/dvwa/access.log
+      - /var/lib/docker/containers/3f35ca79bc86a092733a0cf72c1be82b58321920f67be477ffc7b652c3b8774c/3f35ca79bc86a092733a0cf72c1be82b58321920f67be477ffc7b652c3b8774c-json.log:/var/lib/docker/containers/dvwa/access.log
     depends_on:
       - elasticsearch
     networks:
