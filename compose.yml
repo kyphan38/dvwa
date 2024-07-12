@@ -36,6 +36,7 @@ services:
       - ES_JAVA_OPTS=-Xms512m -Xmx512m      # Inital heap size - Maximum heap size
     volumes:
       - esdata:/usr/share/elasticsearch/data
+      - ./config/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     networks:
       - dvwa
     ports:
@@ -61,7 +62,7 @@ services:
     user: root
     volumes:
       - ./logstash/pipeline:/usr/share/logstash/pipeline
-      - /var/lib/docker/containers/3f35ca79bc86a092733a0cf72c1be82b58321920f67be477ffc7b652c3b8774c/3f35ca79bc86a092733a0cf72c1be82b58321920f67be477ffc7b652c3b8774c-json.log:/var/lib/docker/containers/dvwa/access.log
+      - /var/lib/docker/containers/b6845689fea746dfe95d8c10e27ae1e8b797d1187f5f6cb337b0bb3fcc0da0aa/b6845689fea746dfe95d8c10e27ae1e8b797d1187f5f6cb337b0bb3fcc0da0aa-json.log:/var/lib/docker/containers/dvwa/access.log
     depends_on:
       - elasticsearch
     networks:
