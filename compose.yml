@@ -53,6 +53,8 @@ services:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
       - ELASTICSEARCH_USERNAME=kibana
       - ELASTICSEARCH_PASSWORD=password
+    volumes:
+      - ./config/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
     depends_on:
       - elasticsearch
     networks:
@@ -66,8 +68,8 @@ services:
     container_name: logstash-1
     user: root
     volumes:
-      - ./logstash/pipeline:/usr/share/logstash/pipeline
-      - /var/lib/docker/containers/06be9ea5b180fc64c678f683951eaa0ffa49b5c15ae6c2b481ef4344e13965b6/06be9ea5b180fc64c678f683951eaa0ffa49b5c15ae6c2b481ef4344e13965b6-json.log:/var/lib/docker/containers/dvwa/access.log
+      - ./config/logstash/pipeline:/usr/share/logstash/pipeline
+      - /var/lib/docker/containers/d0a3f3deedd3a0cf15fa27748ad937cf0bfeb7179afdd08ed87b5204ead7393c/d0a3f3deedd3a0cf15fa27748ad937cf0bfeb7179afdd08ed87b5204ead7393c-json.log:/var/lib/docker/containers/dvwa/access.log
     depends_on:
       - elasticsearch
     networks:

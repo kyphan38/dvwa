@@ -23,7 +23,7 @@ fi
 docker compose up --build -d elasticsearch kibana logstash
 
 echo "Waiting for setting up"
-sleep 60
+sleep 30
 
 for user in apm_system kibana_system kibana logstash_system beats_system remote_monitoring_user;
 do
@@ -33,6 +33,8 @@ do
   }
   '
 done
+
+sleep 10
 
 # Create index pattern using API
 curl -sX POST -u elastic:password "localhost:8080/api/index_patterns/index_pattern" -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d'{
