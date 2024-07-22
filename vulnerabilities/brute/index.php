@@ -14,6 +14,8 @@ dvwaDatabaseConnect();
 
 $method            = 'GET';
 $vulnerabilityFile = '';
+$html = ''; // Initialize the $html variable
+
 switch( dvwaSecurityLevelGet() ) {
 	case 'low':
 		$vulnerabilityFile = 'low.php';

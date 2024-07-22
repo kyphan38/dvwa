@@ -34,7 +34,7 @@ do
   '
 done
 
-sleep 10
+sleep 20
 
 # Create index pattern using API
 curl -sX POST -u elastic:password "localhost:8080/api/index_patterns/index_pattern" -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d'{

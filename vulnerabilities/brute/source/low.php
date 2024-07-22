@@ -23,7 +23,9 @@ if( isset( $_GET[ 'Login' ] ) ) {
 	}
 	else {
 		// Login failed
+		http_response_code(401);
 		$html .= "<pre><br />Username and/or password incorrect.</pre>";
+		return;
 	}
 
 	((is_null($___mysqli_res = mysqli_close($GLOBALS["___mysqli_ston"]))) ? false : $___mysqli_res);

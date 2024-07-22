@@ -69,7 +69,7 @@ services:
     user: root
     volumes:
       - ./config/logstash/pipeline:/usr/share/logstash/pipeline
-      - /var/lib/docker/containers/d0a3f3deedd3a0cf15fa27748ad937cf0bfeb7179afdd08ed87b5204ead7393c/d0a3f3deedd3a0cf15fa27748ad937cf0bfeb7179afdd08ed87b5204ead7393c-json.log:/var/lib/docker/containers/dvwa/access.log
+      - /var/lib/docker/containers/c92ff0fe51a4417a1ede50267909d3f0e4d0a59bc98a9a33340291ae1c5a220c/c92ff0fe51a4417a1ede50267909d3f0e4d0a59bc98a9a33340291ae1c5a220c-json.log:/var/lib/docker/containers/dvwa/access.log
     depends_on:
       - elasticsearch
     networks:
