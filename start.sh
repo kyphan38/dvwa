@@ -23,7 +23,15 @@ fi
 docker compose up --build -d elasticsearch kibana logstash
 
 echo "Waiting for setting up"
-sleep 30
+while [ 1 ]
+do
+  status_code=$(curl -LI -u elastic:password localhost:9200 -o /dev/null -w '%{http_code}\n' -s)
+  if [[ $status_code == 200 ]]; then
+    echo $status_code
+    break;
+  fi
+  sleep 5s
+done
 
 for user in apm_system kibana_system kibana logstash_system beats_system remote_monitoring_user;
 do
@@ -35,6 +43,16 @@ do
 done
 
 sleep 20
+=======
+while [ 1 ]
+do
+  status_code=$(curl -LI -u elastic:password localhost:8080 -o /dev/null -w '%{http_code}\n' -s) 
+  if [[ $status_code == 200 ]]; then
+    echo $status_code
+    break;
+  fi	
+  sleep 5s
+done
 
 # Create index pattern using API
 curl -sX POST -u elastic:password "localhost:8080/api/index_patterns/index_pattern" -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d'{
