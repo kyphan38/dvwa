@@ -42,6 +42,8 @@ do
   '
 done
 
+sleep 20
+=======
 while [ 1 ]
 do
   status_code=$(curl -LI -u elastic:password localhost:8080 -o /dev/null -w '%{http_code}\n' -s) 
